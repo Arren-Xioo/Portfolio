@@ -6,24 +6,31 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
     />
+    <meta name="theme-color" content="#46311e" />
     <title>Arren's Camarista Portfolio</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     />
     <link rel="stylesheet" href="Style.css" />
   </head>
   <body>
+    <!-- ═══ SECTION 1 — HERO ═══ -->
     <section id="home" class="section section1">
       <img src="Images/Castle BG.png" alt="Castle Background" />
       <img src="Images/Knight BG-Photoroom.png" id="nbg" alt="Knight" />
 
       <div class="parallax-header">
-        <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav
+          class="navbar navbar-expand-lg navbar-dark"
+          aria-label="Main navigation"
+        >
           <div class="container">
             <a class="navbar-brand" href="#home">ArrenCamarista</a>
             <button
@@ -64,16 +71,18 @@
       </div>
 
       <div class="hero-content">
-        <p class="FULL" id="typewriter"></p>
+        <p class="FULL" id="typewriter" aria-live="polite"></p>
         <div class="hire-btn">
-          <a href="#contact">
-            <button type="button" class="btn">Hire Me!</button>
-          </a>
+          <a href="#contact"
+            ><button type="button" class="btn">Hire Me!</button></a
+          >
         </div>
       </div>
     </section>
 
+    <!-- ═══ SECTION 2 — MAIN CONTENT ═══ -->
     <section class="section section2">
+      <!-- About -->
       <div id="profile" class="about-container reveal">
         <h2 class="about-title">About Me</h2>
         <p class="about-text">
@@ -89,15 +98,14 @@
         </p>
       </div>
 
+      <!-- Affiliations -->
       <div class="affiliations-container reveal">
         <h2 class="tech-title" style="font-size: 2.5rem; margin-bottom: 2rem">
           Affiliations
         </h2>
         <div class="affiliations-grid">
           <div class="aff-card">
-            <div class="aff-icon">
-              <i class="fas fa-trophy"></i>
-            </div>
+            <div class="aff-icon"><i class="fas fa-trophy"></i></div>
             <div class="aff-info">
               <span class="aff-role">Social Media Manager</span>
               <h3 class="aff-org">FRX Syntax Org</h3>
@@ -107,11 +115,8 @@
               </p>
             </div>
           </div>
-
           <div class="aff-card">
-            <div class="aff-icon">
-              <i class="fas fa-fire"></i>
-            </div>
+            <div class="aff-icon"><i class="fas fa-fire"></i></div>
             <div class="aff-info">
               <span class="aff-role">Active Member</span>
               <h3 class="aff-org">Blaze Org</h3>
@@ -124,12 +129,12 @@
         </div>
       </div>
 
+      <!-- Tech Stack -->
       <div id="techstack" class="tech-stack-section">
         <h2 class="tech-title reveal">Tech Stack</h2>
         <p class="tech-subtitle reveal">
           Technical Skills and Technologies I Use
         </p>
-
         <div class="tech-grid">
           <div class="tech-card reveal-card">
             <h3>Programming</h3>
@@ -139,7 +144,6 @@
               <span>Python <i class="fa-brands fa-python"></i></span>
             </div>
           </div>
-
           <div class="tech-card reveal-card">
             <h3>Web Development</h3>
             <div class="tech-items">
@@ -149,7 +153,6 @@
               <span>Bootstrap <i class="fa-brands fa-bootstrap"></i></span>
             </div>
           </div>
-
           <div class="tech-card reveal-card">
             <h3>Database</h3>
             <div class="tech-items">
@@ -157,7 +160,6 @@
               <span>MongoDB <i class="fa-solid fa-database"></i></span>
             </div>
           </div>
-
           <div class="tech-card reveal-card">
             <h3>Tools</h3>
             <div class="tech-items">
@@ -170,11 +172,11 @@
         </div>
       </div>
 
+      <!-- Projects -->
       <div id="projects" class="projects-section">
         <h2 class="projects-title reveal">PROJECTS</h2>
         <div class="project-window">
           <div class="project-track" id="projectTrain">
-            <!-- Project 1 -->
             <div class="project-card-horizontal">
               <div class="project-img-box">
                 <img
@@ -192,20 +194,16 @@
                 <div class="project-tags">
                   <span class="tag"><i class="fa fa-hashtag"></i> C Sharp</span>
                   <span class="tag"
-                    ><i class="fab fa-windows"></i>Microsoft SQL Server</span
+                    ><i class="fab fa-windows"></i> Microsoft SQL Server</span
                   >
                 </div>
                 <div class="project-links">
-                  <button
-                    class="btn-action"
-                    aria-label="View DXtreme Gym code on GitHub"
-                  >
+                  <button class="btn-action">
                     <i class="fab fa-github"></i> Code
                   </button>
                   <button
                     class="btn-action screenshot-btn"
                     data-img="Images/dxtreme.jpg"
-                    aria-label="View DXtreme Gym screenshots"
                   >
                     <i class="fas fa-image"></i> Screenshots
                   </button>
@@ -213,7 +211,6 @@
               </div>
             </div>
 
-            <!-- Project 2 -->
             <div class="project-card-horizontal">
               <div class="project-img-box">
                 <img
@@ -229,32 +226,20 @@
                   reservations.
                 </p>
                 <div class="project-tags">
-                  <span class="tag"><i class="fa-brands fa-java"></i>Java</span>
-                  <span class="tag">
-                    <i class="fab fa-windows"></i> Microsoft SQL Server</span
+                  <span class="tag"
+                    ><i class="fa-brands fa-java"></i> Java</span
+                  >
+                  <span class="tag"
+                    ><i class="fab fa-windows"></i> Microsoft SQL Server</span
                   >
                 </div>
                 <div class="project-links">
-                  <button
-                    class="btn-action"
-                    aria-label="View Flight Booking System code on GitHub"
-                  >
+                  <button class="btn-action">
                     <i class="fab fa-github"></i> Code
                   </button>
                   <button
                     class="btn-action screenshot-btn"
-                    data-img="Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0001.jpg, 
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0002.jpg, 
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0003.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0004.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0005.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0006.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0007.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0008.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0009.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0010.jpg,
-                    Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0011.jpg"
-                    aria-label="View Flight Booking System screenshots"
+                    data-img="Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0001.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0002.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0003.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0004.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0005.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0006.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0007.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0008.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0009.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0010.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0011.jpg"
                   >
                     <i class="fas fa-image"></i> Screenshots
                   </button>
@@ -265,46 +250,18 @@
         </div>
       </div>
 
+      <!-- Webinars -->
       <section id="webinars" class="webinars-section">
         <h2 class="projects-title reveal">WEBINAR HISTORY</h2>
         <div class="webinar-container">
           <div class="webinar-card reveal">
-            <div class="webinar-date">Feb 2026</div>
-            <div class="webinar-content">
-              <h3>Hour of AI + Prompting 101</h3>
-              <p>
-                Conducted by Carl Balita Review Center & SmartCT. Focused on AI
-                utility and advanced prompting techniques.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Artificial Intelligence</span>
-                <span class="tag">Prompt Engineering</span>
-              </div>
-              <small class="text-white-50"
-                ><i class="fas fa-users"></i> 4,000+ Attendees</small
-              >
+            <div class="webinar-img-box">
+              <img
+                src="Images/Syntax End Game.png"
+                alt="SYNTAX Endgame"
+                loading="lazy"
+              />
             </div>
-          </div>
-
-          <div class="webinar-card reveal">
-            <div class="webinar-date">Oct 2025</div>
-            <div class="webinar-content">
-              <h3>Hour of Code</h3>
-              <p>
-                Collaborative session with SmartCT AI Ready ASEAN to broaden AI
-                knowledge for various communities.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Coding</span>
-                <span class="tag">AI Literacy</span>
-              </div>
-              <small class="text-white-50"
-                ><i class="fas fa-users"></i> 4,000+ Attendees</small
-              >
-            </div>
-          </div>
-
-          <div class="webinar-card reveal">
             <div class="webinar-date">Apr 2024</div>
             <div class="webinar-content">
               <h3>SYNTAX Endgame: Second IT Congress</h3>
@@ -324,26 +281,36 @@
           </div>
 
           <div class="webinar-card reveal">
-            <div class="webinar-date">Jan 2024</div>
+            <div class="webinar-img-box">
+              <img
+                src="Images/Bridging.jpg"
+                alt="Bridging Knowledge"
+                loading="lazy"
+              />
+            </div>
+            <div class="webinar-date">Dec 2024</div>
             <div class="webinar-content">
-              <h3>Beyond Binaries: SYNTAXium</h3>
+              <h3>Bridging Knowledge</h3>
               <p>
-                College fair seminar focusing on OS threads and current Web3
-                environment trends.
+                Exploring Digital Divide, Cybersecurity and OS Trends,
+                Professionalism in the IT Industry, and Programming. The seminar
+                provided valuable insights into important topics in Information
+                Technology, helping participants expand their knowledge of
+                current industry trends and professional practices.
               </p>
               <div class="project-tags">
                 <span class="tag">Operating Systems</span>
                 <span class="tag">Web Trends</span>
               </div>
               <small class="text-white-50"
-                ><i class="fas fa-users"></i> 200+ Attendees</small
+                ><i class="fas fa-users"></i> 300+ Attendees</small
               >
             </div>
           </div>
         </div>
       </section>
 
-      <!-- CERTIFICATIONS -->
+      <!-- Certifications -->
       <section class="certifications-section">
         <h2 class="certs-title reveal">CERTIFICATIONS</h2>
         <div class="certs-grid">
@@ -359,18 +326,16 @@
               <h3>Java Fundamentals</h3>
               <p>Awarded for core principles in Java and NetBeans.</p>
               <div class="cert-tags">
-                <span class="tag"> Java <i class="fa-brands fa-java"></i></span>
+                <span class="tag">Java <i class="fa-brands fa-java"></i></span>
                 <button
                   class="btn-action view-cert-btn"
                   data-img="Images/java cert.png"
-                  aria-label="View Java Fundamentals Certificate"
                 >
                   <i class="fa fa-search-plus"></i> View Certificate
                 </button>
               </div>
             </div>
           </div>
-
           <div class="cert-card reveal">
             <div class="cert-img-box">
               <img
@@ -387,7 +352,6 @@
                 <button
                   class="btn-action view-cert-btn"
                   data-img="Images/sap cert.png"
-                  aria-label="View SAP Modules Certificate"
                 >
                   <i class="fa fa-search-plus"></i> View Certificate
                 </button>
@@ -397,19 +361,81 @@
         </div>
       </section>
 
+      <!--FUN GALLERY-->
+      <section class="fun-gallery-section">
+        <h2 class="fun-title reveal">TOTOY GALLERY</h2>
+        <p class="fun-subtitle reveal">The Crew!</p>
+        <div class="fun-grid" id="funGrid">
+          <div
+            class="fun-card reveal-card"
+            data-name="Angelo"
+            data-caption="Tirador ng Tourism"
+          >
+            <img src="Images/Pros/Angelo.jpg" alt="Angelo" loading="lazy" />
+          </div>
+
+          <div
+            class="fun-card reveal-card"
+            data-name="Baby Mark"
+            data-caption="Ancient Photo"
+          >
+            <img src="Images/Pros/Idk.png" alt="Mystery" loading="lazy" />
+          </div>
+
+          <div
+            class="fun-card reveal-card"
+            data-name="Luke"
+            data-caption="Luke Hub"
+          >
+            <img src="Images/Pros/Luke.png" alt="Luke" loading="lazy" />
+          </div>
+
+          <div
+            class="fun-card reveal-card"
+            data-name="Mark"
+            data-caption="Titan yarn?"
+          >
+            <img src="Images/Pros/Mark.jpg" alt="Mark" loading="lazy" />
+          </div>
+
+          <div
+            class="fun-card reveal-card"
+            data-name="Myke"
+            data-caption="Galit kay Shie"
+          >
+            <img src="Images/Pros/Myke.jpg" alt="Myke" loading="lazy" />
+          </div>
+
+          <div
+            class="fun-card reveal-card"
+            data-name="Raven"
+            data-caption="Natatae ulet"
+          >
+            <img src="Images/Pros/Raven.jpg" alt="Raven" loading="lazy" />
+          </div>
+
+          <div
+            class="fun-card reveal-card"
+            data-name="Arren"
+            data-caption="Totoy"
+          >
+            <img src="Images/Pros/Ren.jpg" alt="Arren" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
       <section id="contact" class="contact-section">
         <h2 class="projects-title reveal">GET IN TOUCH</h2>
         <p class="text-center text-white-50 mb-5 reveal">
           Let's collaborate on your next project!
         </p>
-
         <div class="contact-grid">
           <a href="mailto:Arrencamarista@gmail.com" class="contact-card reveal">
             <i class="fas fa-envelope"></i>
             <span>Email</span>
             <p>Arrencamarista@gmail.com</p>
           </a>
-
           <a
             href="https://www.linkedin.com/in/arren-camarista-03bbb4325/"
             target="_blank"
@@ -420,7 +446,6 @@
             <span>LinkedIn</span>
             <p>Arren Camarista</p>
           </a>
-
           <a
             href="https://www.facebook.com/arrenjames.m.camarista"
             target="_blank"
@@ -431,21 +456,19 @@
             <span>Facebook</span>
             <p>Arren Camarista</p>
           </a>
-
           <a href="tel:09948359707" class="contact-card reveal">
             <i class="fas fa-phone"></i>
             <span>Phone</span>
             <p>0994 835 9707</p>
           </a>
         </div>
-
         <footer class="footer-text mt-5">
           <p>© 2026 Arren Camarista. All Rights Reserved.</p>
         </footer>
       </section>
     </section>
 
-    <!-- MODAL -->
+    <!-- ═══ MODAL ═══ -->
     <div
       id="certModal"
       class="cert-modal"
