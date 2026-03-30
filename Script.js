@@ -1,4 +1,65 @@
+// ═══ CRITICAL: RUN IMMEDIATELY BEFORE ANY OTHER CODE ═══
+// This must be the FIRST thing executed
+(function () {
+  // Disable scroll restoration
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  // Clear any hash from URL immediately
+  if (window.location.hash) {
+    const cleanUrl = window.location.pathname + window.location.search;
+    history.replaceState(null, null, cleanUrl);
+  }
+
+  // Force scroll to top synchronously
+  window.scrollTo(0, 0);
+
+  // Prevent any initial scroll behavior
+  const preventInitialScroll = function (e) {
+    window.scrollTo(0, 0);
+    e.preventDefault();
+    return false;
+  };
+
+  // Block scroll events for a short period
+  window.addEventListener("scroll", preventInitialScroll, {
+    passive: false,
+    once: false,
+  });
+  setTimeout(() => {
+    window.removeEventListener("scroll", preventInitialScroll);
+    window.scrollTo(0, 0);
+  }, 500);
+})();
+
+// Main DOMContentLoaded event
 document.addEventListener("DOMContentLoaded", () => {
+  // Additional scroll reset
+  window.scrollTo(0, 0);
+
+  // Check if there's a valid hash that should be navigated to
+  if (window.location.hash) {
+    const hash = window.location.hash;
+    // Clear hash again
+    history.replaceState(
+      null,
+      null,
+      window.location.pathname + window.location.search,
+    );
+    setTimeout(() => {
+      history.replaceState(null, null, hash);
+      const element = document.querySelector(hash);
+      if (element) {
+        // Only scroll if it's not the fun gallery or if it's explicitly linked
+        // Skip auto-scrolling to fun gallery sections
+        if (!hash.includes("fun") && !hash.includes("gallery")) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }, 100);
+  }
+
   const isTouchDevice = () =>
     "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
@@ -135,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─────────────────────────────────────────────
   const knight = document.getElementById("Knight");
   const hero = document.querySelector(".hero-content");
-  const castle = document.querySelector(".section1 img:first-child");
+  const castle = document.querySelector("#castle");
   const section2 = document.querySelector(".section2");
   const section2Overlay = document.querySelector(".section2-light-overlay");
   const sections = document.querySelectorAll("section[id]");
@@ -158,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
           knight.style.transform = `translate(${knightX}px, ${knightY}px) scale(${knightScale})`;
         }
         if (castle) {
-          const castleY = scroll * 0.22;
+          const castleY = scroll * 0.5;
           const castleScale = 1 + scroll * 0.0003;
           castle.style.transform = `translateY(${castleY}px) scale(${castleScale})`;
         }
@@ -378,4 +439,21 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     { passive: true },
   );
+
+  // Final scroll reset after everything is loaded
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 0);
+
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 50);
+
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 100);
+
+  window.addEventListener("load", function () {
+    window.scrollTo(0, 0);
+  });
 });
