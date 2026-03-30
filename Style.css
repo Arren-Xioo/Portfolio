@@ -828,7 +828,7 @@ p.FULL {
   backface-visibility: hidden;
 }
 
-/* FRONT — photo only, no extra box */
+/* FRONT — photo only*/
 .fun-front {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -837,7 +837,7 @@ p.FULL {
 .fun-front img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fills the card like a real photo card */
+  object-fit: cover; 
   display: block;
   border-radius: 12px;
 }
@@ -1206,7 +1206,6 @@ p.FULL {
   }
 }
 
-/* Touch devices — disable broken hover states */
 @media (hover: none) and (pointer: coarse) {
   .hire-btn button:hover {
     transform: none;
@@ -1253,12 +1252,13 @@ p.FULL {
   .fun-back,
   .contact-card,
   .cert-modal {
+    
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
 }
 
-/* Reduced motion */
+
 @media (prefers-reduced-motion: reduce) {
   .project-track {
     animation: none;

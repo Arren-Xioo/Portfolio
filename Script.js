@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ─────────────────────────────────────────────
-  //  DEVICE HELPERS
-  // ─────────────────────────────────────────────
   const isTouchDevice = () =>
     "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
@@ -9,12 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const useParallax = !isTouchDevice() && !isSmallScreen();
 
-  // ─────────────────────────────────────────────
-  //  BUILD FUN GALLERY FLIP CARDS
-  //  Reads each .fun-card's <img>, data-name, data-caption
-  //  then injects the .fun-inner / .fun-front / .fun-back structure.
-  //  The HTML stays clean — no nested divs needed there.
-  // ─────────────────────────────────────────────
   const funCards = document.querySelectorAll(".fun-card");
 
   funCards.forEach((card) => {
@@ -42,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     card.appendChild(inner);
   });
 
-  // Click/tap — flip one card at a time across all devices
+  // tap — flip one card
   funCards.forEach((card) => {
     card.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -102,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   type();
 
   // ─────────────────────────────────────────────
-  //  NAVBAR — scroll-activated background
+  //  NAVBAR 
   // ─────────────────────────────────────────────
   const parallaxHeader = document.querySelector(".parallax-header");
 
@@ -114,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateNavbar();
 
   // ─────────────────────────────────────────────
-  //  PARALLAX + SCROLL UPDATES
+  //  PARALLAX 
   // ─────────────────────────────────────────────
   const knight = document.getElementById("nbg");
   const hero = document.querySelector(".hero-content");
@@ -192,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // ─────────────────────────────────────────────
-  //  PROJECT CAROUSEL — duplicate for seamless loop
+  //  PROJECT CAROUSEL 
   // ─────────────────────────────────────────────
   const train = document.getElementById("projectTrain");
   if (train) {
@@ -294,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ─────────────────────────────────────────────
-  //  RESIZE — reset hero transform on orientation change
+  //  RESIZE 
   // ─────────────────────────────────────────────
   let resizeTimer;
   window.addEventListener(
