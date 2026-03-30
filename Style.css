@@ -1,0 +1,758 @@
+/* Custom Fonts */
+@font-face {
+  font-family: "CardinalAlternate";
+  src: url("Font/Cardinal-Alternate.ttf");
+}
+
+@font-face {
+  font-family: "Firlest";
+  src: url("Font/Firlest-Regular.otf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}
+
+#profile,
+#techstack,
+#projects,
+#contact {
+  scroll-margin-top: 100px;
+}
+
+.parallax-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  font-family: "CardinalAlternate";
+}
+
+.section1 {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: #673400;
+}
+
+.section1 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 5;
+}
+
+.section1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 350px;
+  background: linear-gradient(to top, #46311e 10%, transparent 100%);
+  z-index: 20;
+}
+
+.hero-content {
+  position: absolute;
+  top: 45%;
+  left: 65%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+p.FULL {
+  font-family: "Firlest";
+  color: white;
+  font-size: clamp(40px, 8vw, 120px);
+  line-height: 0.9;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.hire-btn button {
+  font-family: "Firlest";
+  padding: 0.8em 2.5em;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid white;
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hire-btn button:hover {
+  background: white;
+  color: #8d8686;
+  transform: scale(1.1);
+}
+
+.section2 {
+  position: relative;
+  min-height: 200vh;
+  width: 100%;
+  margin-top: -1px;
+  background-color: #46311e;
+  background-image:
+    linear-gradient(to bottom, #46311e 0%, transparent 5%),
+    url("Images/Arren\ long.png");
+  background-attachment: scroll;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  z-index: 21;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 150px 20px;
+}
+
+.about-container {
+  max-width: 1200px;
+  padding: 3rem;
+  margin-top: 20vh;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  transition:
+    transform 0.6s ease-out,
+    opacity 0.6s ease-out;
+}
+
+.about-title {
+  font-family: "CardinalAlternate";
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.about-text {
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  text-align: justify;
+  opacity: 0.9;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.about-text Strong {
+  color: #8f6b6f;
+}
+
+.tech-stack-section {
+  width: 90%;
+  max-width: 1200px;
+  margin-top: 10vh;
+  text-align: center;
+  color: white;
+}
+
+.tech-grid h3 {
+  font-family: "CardinalAlternate";
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tech-title {
+  font-family: "CardinalAlternate";
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  color: #f1f1f1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tech-subtitle {
+  font-family: sans-serif;
+  opacity: 0.7;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.tech-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  flex: 1 1 350px;
+  max-width: 450px;
+  transition: 0.3s ease;
+}
+
+.tech-card h3 {
+  font-family: sans-serif;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tech-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.tech-items span {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.reveal,
+.reveal-card {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  will-change: transform, opacity;
+}
+
+.reveal.active,
+.reveal-card.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.projects-section {
+  width: 100%;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.projects-title {
+  color: white;
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 40px;
+  font-family: "CardinalAlternate", sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.project-window {
+  width: 100%;
+  overflow: hidden;
+  padding: 50px 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+}
+
+.project-track {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+  animation: trainLoop 45s linear infinite;
+}
+
+.project-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes trainLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.project-card-horizontal {
+  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  width: 800px;
+  padding: 25px;
+  flex-shrink: 0;
+}
+
+.projects-title {
+  color: white;
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-family: "CardinalAlternate", sans-serif;
+}
+
+.project-img-box img {
+  width: 320px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-right: 25px;
+  background: #000;
+}
+
+.project-info h3 {
+  font-family: "CardinalAlternate", sans-serif;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.project-info p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tag,
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.cursor {
+  animation: blink 0.7s infinite;
+}
+
+.certifications-section {
+  width: 90%;
+  max-width: 1200px;
+  margin: 10vh auto;
+  text-align: center;
+}
+
+.certs-title {
+  font-family: "CardinalAlternate", sans-serif;
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.certs-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 50px;
+}
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+}
+
+.cert-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.cert-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.cert-img-box {
+  width: 100%;
+  height: 250px;
+  margin-top: 10px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-img-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.cert-info {
+  padding: 25px;
+}
+
+.cert-info h3 {
+  font-family: "CardinalAlternate", sans-serif;
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.cert-info p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.cert-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Center for Certification Modal */
+.cert-modal {
+  display: none; /* Keep hidden by default */
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(5px);
+  justify-content: center; /* Prepared for flex centering */
+  align-items: center;
+  padding: 20px;
+}
+
+/* Center for Standard Modal */
+.modal {
+  display: none; /* Keep hidden by default */
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  justify-content: center; /* Prepared for flex centering */
+  align-items: center;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.close-modal {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  color: #f1f1f1;
+  font-size: 60px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-modal:hover {
+  color: #bbb;
+}
+
+.webinars-section {
+  width: 90%;
+  max-width: 1000px;
+  margin: 10vh auto;
+}
+
+.webinar-container {
+  position: relative;
+  padding-left: 30px;
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.tech-card h3 {
+  font-family: "CardinalAlternate", serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.webinar-card {
+  position: relative;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  padding: 20px 25px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
+}
+
+.webinar-card::before {
+  content: "";
+  position: absolute;
+  left: -41px;
+  top: 25px;
+  width: 20px;
+  height: 20px;
+  background: #46311e;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.webinar-card:hover {
+  transform: translateX(10px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.webinar-date {
+  font-family: "Firlest", sans-serif;
+  color: #d1b8bb;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.webinar-content h3 {
+  font-family: "CardinalAlternate", sans-serif;
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.webinar-content p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.affiliations-container {
+  width: 90%;
+  max-width: 1100px;
+  margin-top: 8vh;
+  text-align: center;
+}
+
+.affiliations-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.aff-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1 1 400px;
+  max-width: 500px;
+  text-align: left;
+  transition: 0.3s ease;
+}
+
+.aff-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #d1b8bb;
+  transform: translateY(-5px);
+}
+
+.aff-icon {
+  font-size: 2.5rem;
+  color: #d1b8bb;
+  background: rgba(0, 0, 0, 0.3);
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.aff-role {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: #d1b8bb;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.aff-org {
+  font-family: "CardinalAlternate", sans-serif;
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.aff-info p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.contact-section {
+  width: 90%;
+  max-width: 1100px;
+  margin: 15vh auto 5vh auto;
+  text-align: center;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 30px 20px;
+  text-decoration: none !important;
+  color: white !important;
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-card i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.contact-card span {
+  font-family: "Firlest", sans-serif;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.contact-card p {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.contact-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: white;
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.footer-text {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 30px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 600px) {
+  .aff-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    width: 95%;
+  }
+  .close-modal {
+    right: 20px;
+    top: 15px;
+  }
+}
+@media (max-width: 768px) {
+  .certs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    left: 50%;
+  }
+}
