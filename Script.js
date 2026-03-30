@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const useParallax = !isTouchDevice() && !isSmallScreen();
 
+  // ─────────────────────────────────────────────
+  //  FLIP CARDS (with keyboard support)
+  // ─────────────────────────────────────────────
   const funCards = document.querySelectorAll(".fun-card");
 
   funCards.forEach((card) => {
@@ -24,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const back = document.createElement("div");
     back.className = "fun-back";
-    back.innerHTML = `<h3>${name}</h3><p>${caption}</p>`;
+    back.innerHTML = `<h3>${escapeHtml(name)}</h3><p>${escapeHtml(caption)}</p>`;
 
     inner.appendChild(front);
     inner.appendChild(back);
@@ -33,19 +36,41 @@ document.addEventListener("DOMContentLoaded", () => {
     card.appendChild(inner);
   });
 
-  // tap — flip one card
+  // Helper function to prevent XSS
+  function escapeHtml(str) {
+    if (!str) return "";
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  // Flip card on click/tap
+  const flipCard = (card) => {
+    const isAlreadyFlipped = card.classList.contains("flipped");
+
+    funCards.forEach((otherCard) => {
+      otherCard.classList.remove("flipped");
+    });
+
+    if (!isAlreadyFlipped) {
+      card.classList.add("flipped");
+    }
+  };
+
   funCards.forEach((card) => {
     card.addEventListener("click", (e) => {
       e.stopPropagation();
+      flipCard(card);
+    });
 
-      const isAlreadyFlipped = card.classList.contains("flipped");
-
-      funCards.forEach((otherCard) => {
-        otherCard.classList.remove("flipped");
-      });
-
-      if (!isAlreadyFlipped) {
-        card.classList.add("flipped");
+    // Keyboard support: Enter and Space
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        flipCard(card);
       }
     });
   });
@@ -71,7 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!textElement) return;
     const current = phrases[i];
     textElement.innerHTML =
-      current.substring(0, j) + '<span class="cursor">|</span>';
+      current.substring(0, j) +
+      '<span class="cursor" aria-hidden="true">|</span>';
 
     if (!deleting) {
       j++;
@@ -93,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
   type();
 
   // ─────────────────────────────────────────────
-  //  NAVBAR 
+  //  NAVBAR
   // ─────────────────────────────────────────────
   const parallaxHeader = document.querySelector(".parallax-header");
 
@@ -105,11 +131,13 @@ document.addEventListener("DOMContentLoaded", () => {
   updateNavbar();
 
   // ─────────────────────────────────────────────
-  //  PARALLAX 
+  //  PARALLAX
   // ─────────────────────────────────────────────
-  const knight = document.getElementById("nbg");
+  const knight = document.getElementById("Knight");
   const hero = document.querySelector(".hero-content");
   const castle = document.querySelector(".section1 img:first-child");
+  const section2 = document.querySelector(".section2");
+  const section2Overlay = document.querySelector(".section2-light-overlay");
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-link");
 
@@ -123,15 +151,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (scroll <= height) {
       if (useParallax) {
-        if (knight)
-          knight.style.transform = `translate(${Math.round(-scroll * 0.06)}px, ${Math.round(scroll * 0.24)}px)`;
-        if (castle) castle.style.transform = `translateY(${scroll * 0.05}px)`;
-        if (hero)
-          hero.style.transform = `translate(-50%, calc(-50% + ${
-            scroll * 0.35
-          }px))`;
+        if (knight) {
+          const knightX = Math.round(-scroll * 0.15);
+          const knightY = Math.round(scroll * 0.1);
+          const knightScale = Math.max(1, 1 + scroll * 0.00055);
+          knight.style.transform = `translate(${knightX}px, ${knightY}px) scale(${knightScale})`;
+        }
+        if (castle) {
+          const castleY = scroll * 0.22;
+          const castleScale = 1 + scroll * 0.0003;
+          castle.style.transform = `translateY(${castleY}px) scale(${castleScale})`;
+        }
+        if (hero) {
+          const heroY = scroll * 0.72;
+          const heroScale = Math.max(0.8, 1 - scroll * 0.0004);
+          hero.style.transform = `translate(-50%, calc(-50% + ${heroY}px)) scale(${heroScale})`;
+        }
       }
-      if (hero) hero.style.opacity = Math.max(0, 1 - scroll / 500);
+      if (hero) hero.style.opacity = Math.max(0, 1 - scroll / 380);
+    }
+
+    if (section2) {
+      const section2Start = Math.max(0, section2.offsetTop - height);
+      const blendProgress = Math.min(
+        1,
+        Math.max(0, (scroll - section2Start) / (height * 1.15)),
+      );
+
+      if (useParallax) {
+        const bgY = 50 - blendProgress * 40;
+        section2.style.backgroundPosition = `center ${bgY}%`;
+        if (section2Overlay) {
+          const overlayY = blendProgress * -260;
+          const overlayScale = 1 + blendProgress * 0.24;
+          section2Overlay.style.transform = `translateY(${overlayY}px) scale(${overlayScale})`;
+        }
+      } else {
+        section2.style.backgroundPosition = "top center";
+        if (section2Overlay) {
+          section2Overlay.style.transform = "none";
+        }
+      }
     }
 
     let current = "";
@@ -183,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // ─────────────────────────────────────────────
-  //  PROJECT CAROUSEL 
+  //  PROJECT CAROUSEL
   // ─────────────────────────────────────────────
   const train = document.getElementById("projectTrain");
   if (train) {
@@ -192,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─────────────────────────────────────────────
-  //  UNIFIED MODAL
+  //  UNIFIED MODAL (with JSON parsing)
   // ─────────────────────────────────────────────
   const modal = document.getElementById("certModal");
   const container = document.getElementById("modalImageContainer");
@@ -202,19 +262,35 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!modal || !container) return;
     container.innerHTML = "";
 
-    rawData
-      .split(",")
-      .map((p) => p.trim())
-      .filter(Boolean)
-      .forEach((path) => {
-        const img = document.createElement("img");
-        img.src = path;
-        img.className = "modal-content";
-        img.alt = title || "";
-        img.style.display = "block";
-        img.style.marginBottom = "20px";
-        container.appendChild(img);
-      });
+    let imageArray = [];
+
+    // Parse JSON array if available, otherwise fallback to split
+    try {
+      if (rawData.startsWith("[")) {
+        imageArray = JSON.parse(rawData);
+      } else {
+        imageArray = rawData
+          .split(",")
+          .map((p) => p.trim())
+          .filter(Boolean);
+      }
+    } catch (e) {
+      console.warn("Failed to parse modal data:", e);
+      imageArray = rawData
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean);
+    }
+
+    imageArray.forEach((path) => {
+      const img = document.createElement("img");
+      img.src = path;
+      img.className = "modal-content";
+      img.alt = title || "Certificate or screenshot image";
+      img.style.display = "block";
+      img.style.marginBottom = "20px";
+      container.appendChild(img);
+    });
 
     if (caption) caption.innerText = title || "";
     modal.style.display = "flex";
@@ -273,19 +349,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─────────────────────────────────────────────
-  //  AUTO-CLOSE MOBILE NAV
+  //  AUTO-CLOSE MOBILE NAV (with null check)
   // ─────────────────────────────────────────────
   const navCollapse = document.getElementById("navbarNav");
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
       if (window.innerWidth < 992 && navCollapse) {
-        bootstrap.Collapse.getInstance(navCollapse)?.hide();
+        const bsCollapse = bootstrap.Collapse.getInstance(navCollapse);
+        if (bsCollapse) bsCollapse.hide();
       }
     });
   });
 
   // ─────────────────────────────────────────────
-  //  RESIZE 
+  //  RESIZE
   // ─────────────────────────────────────────────
   let resizeTimer;
   window.addEventListener(

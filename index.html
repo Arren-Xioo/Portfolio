@@ -16,15 +16,33 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <link rel="stylesheet" href="Style.css" />
   </head>
   <body>
     <!-- ═══ SECTION 1 — HERO ═══ -->
     <section id="home" class="section section1">
-      <img src="Images/Castle BG.png" alt="Castle Background" />
-      <img src="Images/Knight BG-Photoroom.png" id="nbg" alt="Knight" />
+      <img
+        src="Images/Castle BG.png"
+        alt="Medieval castle background with towers"
+        id="castle"
+      />
+      <img
+        src="Images/Knight BG-Photoroom.png"
+        alt="Knight in armor standing ready"
+        id="Knight"
+      />
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        id="nbg"
+        poster="Images/fallback-image.jpg"
+      >
+        <source src="Images/fire.mp4" type="video/mp4" />
+      </video>
 
       <div class="parallax-header">
         <nav
@@ -85,6 +103,17 @@
 
     <!-- ═══ SECTION 2 — MAIN CONTENT ═══ -->
     <section class="section section2">
+      <video
+        class="section2-light-overlay"
+        autoplay
+        muted
+        loop
+        playsinline
+        aria-hidden="true"
+      >
+        <source src="Images/light1.mp4" type="video/mp4" />
+      </video>
+
       <!-- About -->
       <div id="profile" class="about-container reveal">
         <h2 class="about-title">About Me</h2>
@@ -152,7 +181,7 @@
             <div class="tech-items">
               <span>HTML <i class="fab fa-html5"></i></span>
               <span>CSS <i class="fab fa-css3-alt"></i></span>
-              <span>JavaScript <i class="fab fa-js-square"></i></span>
+              <span>JavaScript <i class="fab fa-js"></i></span>
               <span>Bootstrap <i class="fa-brands fa-bootstrap"></i></span>
             </div>
           </div>
@@ -184,7 +213,7 @@
               <div class="project-img-box">
                 <img
                   src="Images/dxtreme.jpg"
-                  alt="DXtreme Gym Screenshot"
+                  alt="DXtreme Gym management system interface"
                   loading="lazy"
                 />
               </div>
@@ -204,6 +233,7 @@
                   <a
                     href="https://github.com/TCxDesu/DXTreme"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="btn-action"
                   >
                     <i class="fab fa-github"></i> Code
@@ -211,7 +241,7 @@
 
                   <button
                     class="btn-action screenshot-btn"
-                    data-img="Images/dxtreme.jpg"
+                    data-img='["Images/dxtreme.jpg","Images/Dxtreme1.png","Images/Dxtreme2.png","Images/Dxtreme3.png"]'
                   >
                     <i class="fas fa-image"></i> Screenshots
                   </button>
@@ -223,7 +253,7 @@
               <div class="project-img-box">
                 <img
                   src="Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0005.jpg"
-                  alt="Flight Booking Screenshot"
+                  alt="Flight Booking System interface showing available flights"
                   loading="lazy"
                 />
               </div>
@@ -242,12 +272,17 @@
                   >
                 </div>
                 <div class="project-links">
-                  <button class="btn-action">
+                  <a
+                    href="https://github.com/TCxDesu/FlightBookingSystem"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-action"
+                  >
                     <i class="fab fa-github"></i> Code
-                  </button>
+                  </a>
                   <button
                     class="btn-action screenshot-btn"
-                    data-img="Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0001.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0002.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0003.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0004.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0005.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0006.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0007.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0008.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0009.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0010.jpg,Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0011.jpg"
+                    data-img='["Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0001.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0002.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0003.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0004.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0005.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0006.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0007.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0008.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0009.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0010.jpg","Images/ilovepdf_pages-to-jpg/Andrei-Pacific-Airline_page-0011.jpg"]'
                   >
                     <i class="fas fa-image"></i> Screenshots
                   </button>
@@ -266,7 +301,7 @@
             <div class="webinar-img-box">
               <img
                 src="Images/Syntax End Game.png"
-                alt="SYNTAX Endgame"
+                alt="SYNTAX Endgame event poster with IT Congress branding"
                 loading="lazy"
               />
             </div>
@@ -292,7 +327,7 @@
             <div class="webinar-img-box">
               <img
                 src="Images/Bridging.jpg"
-                alt="Bridging Knowledge"
+                alt="Bridging Knowledge seminar promotional image"
                 loading="lazy"
               />
             </div>
@@ -326,7 +361,7 @@
             <div class="cert-img-box">
               <img
                 src="Images/java cert.png"
-                alt="Java Certification"
+                alt="Java Fundamentals certification document"
                 loading="lazy"
               />
             </div>
@@ -337,7 +372,7 @@
                 <span class="tag"><i class="fa-brands fa-java"></i>Java </span>
                 <button
                   class="btn-action view-cert-btn"
-                  data-img="Images/java cert.png"
+                  data-img='["Images/java cert.png"]'
                 >
                   <i class="fa fa-search-plus"></i> View Certificate
                 </button>
@@ -348,7 +383,7 @@
             <div class="cert-img-box">
               <img
                 src="Images/sap cert.png"
-                alt="SAP Certification"
+                alt="SAP S/4HANA certification document"
                 loading="lazy"
               />
             </div>
@@ -361,7 +396,7 @@
                 >
                 <button
                   class="btn-action view-cert-btn"
-                  data-img="Images/sap cert.png"
+                  data-img='["Images/sap cert.png"]'
                 >
                   <i class="fa fa-search-plus"></i> View Certificate
                 </button>
@@ -380,6 +415,8 @@
             class="fun-card reveal-card"
             data-name="Angelo"
             data-caption="Tirador ng Tourism"
+            role="button"
+            tabindex="0"
           >
             <img src="Images/Pros/Angelo.jpg" alt="Angelo" loading="lazy" />
           </div>
@@ -388,14 +425,22 @@
             class="fun-card reveal-card"
             data-name="Baby Mark"
             data-caption="Ancient Photo"
+            role="button"
+            tabindex="0"
           >
-            <img src="Images/Pros/Idk.png" alt="Mystery" loading="lazy" />
+            <img
+              src="Images/Pros/Idk.png"
+              alt="Mystery person"
+              loading="lazy"
+            />
           </div>
 
           <div
             class="fun-card reveal-card"
             data-name="Luke"
             data-caption="Luke Hub"
+            role="button"
+            tabindex="0"
           >
             <img src="Images/Pros/Luke.png" alt="Luke" loading="lazy" />
           </div>
@@ -404,6 +449,8 @@
             class="fun-card reveal-card"
             data-name="Mark"
             data-caption="Titan yarn?"
+            role="button"
+            tabindex="0"
           >
             <img src="Images/Pros/Mark.jpg" alt="Mark" loading="lazy" />
           </div>
@@ -412,6 +459,8 @@
             class="fun-card reveal-card"
             data-name="Myke"
             data-caption="Galit kay Shie"
+            role="button"
+            tabindex="0"
           >
             <img src="Images/Pros/Myke.jpg" alt="Myke" loading="lazy" />
           </div>
@@ -420,6 +469,8 @@
             class="fun-card reveal-card"
             data-name="Raven"
             data-caption="Natatae ulet"
+            role="button"
+            tabindex="0"
           >
             <img src="Images/Pros/Raven.jpg" alt="Raven" loading="lazy" />
           </div>
@@ -428,6 +479,8 @@
             class="fun-card reveal-card"
             data-name="Arren"
             data-caption="Totoy"
+            role="button"
+            tabindex="0"
           >
             <img src="Images/Pros/Ren.jpg" alt="Arren" loading="lazy" />
           </div>

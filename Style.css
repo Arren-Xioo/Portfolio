@@ -69,8 +69,22 @@ img {
   font-family: "CardinalAlternate";
 }
 
+/* Focus styles for accessibility */
+.navbar .nav-link:focus-visible,
+.btn-action:focus-visible,
+.hire-btn button:focus-visible,
+.contact-card:focus-visible,
+.fun-card:focus-visible {
+  outline: 2px solid #d1b8bb;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @media (max-width: 991px) {
   .navbar-collapse {
+    background: rgba(30, 15, 5, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1rem 0.5rem;
     margin-top: 0.5rem;
@@ -95,25 +109,37 @@ img {
   background-color: #673400;
 }
 
-.section1 img {
+.section1 img,
+.section1 video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.section1 img {
   z-index: 5;
+}
+
+#nbg {
+  z-index: 12;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  mix-blend-mode: screen;
+  opacity: 1;
+  pointer-events: none;
 }
 
 .section1::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 350px;
-  background: linear-gradient(to top, #46311e 10%, transparent 100%);
-  z-index: 20;
+  inset: 0;
+  background: none;
+  z-index: 18;
   pointer-events: none;
 }
 
@@ -171,9 +197,7 @@ p.FULL {
   width: 100%;
   margin-top: -1px;
   background-color: #46311e;
-  background-image:
-    linear-gradient(to bottom, #46311e 0%, transparent 5%),
-    url("Images/Arren long.png");
+  background-image: url("Images/Arren%20long%20(1).png");
   background-attachment: scroll;
   background-size: cover;
   background-position: top center;
@@ -183,6 +207,37 @@ p.FULL {
   flex-direction: column;
   align-items: center;
   padding: 150px 20px 80px;
+  overflow: hidden;
+}
+
+.section2-light-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section2 > *:not(.section2-light-overlay) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+  .about-container,
+  .aff-card,
+  .tech-card,
+  .webinar-card,
+  .cert-card,
+  .fun-back,
+  .contact-card {
+    background: rgba(30, 20, 15, 0.85);
+  }
 }
 
 /* ===== ABOUT ===== */
@@ -244,8 +299,9 @@ p.FULL {
 
 .aff-card {
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 30px;
   display: flex;
@@ -258,8 +314,8 @@ p.FULL {
 }
 
 .aff-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: white;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #d1b8bb;
   transform: translateY(-5px);
 }
 
@@ -350,7 +406,7 @@ p.FULL {
 }
 
 .tech-card h3 {
-  font-family: sans-serif;
+  font-family: "CardinalAlternate";
   font-size: 1.4rem;
   margin-bottom: 1.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
@@ -511,10 +567,8 @@ p.FULL {
 
 .tag,
 .btn-action {
-  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -527,11 +581,14 @@ p.FULL {
   transition:
     background 0.2s,
     border-color 0.2s;
+  text-decoration: none;
 }
 
 .btn-action:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: white;
+  color: white;
+  text-decoration: none;
 }
 
 /* ===== WEBINARS ===== */
@@ -539,10 +596,16 @@ p.FULL {
   width: 90%;
   max-width: 1000px;
   margin: 10vh auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .webinar-container {
   position: relative;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
   padding-left: 40px;
   border-left: 2px solid rgba(255, 255, 255, 0.2);
 }
@@ -562,7 +625,8 @@ p.FULL {
     border-color 0.3s ease;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
 }
 
 .webinar-img-box {
@@ -812,7 +876,12 @@ p.FULL {
 }
 
 /* Hover flip on desktop */
-.fun-card:hover .fun-inner,
+@media (hover: hover) {
+  .fun-card:hover .fun-inner {
+    transform: rotateY(180deg);
+  }
+}
+
 .fun-card.flipped .fun-inner {
   transform: rotateY(180deg);
 }
@@ -828,7 +897,7 @@ p.FULL {
   backface-visibility: hidden;
 }
 
-/* FRONT — photo only*/
+/* FRONT — photo only, no extra box */
 .fun-front {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -837,14 +906,13 @@ p.FULL {
 .fun-front img {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   display: block;
   border-radius: 12px;
 }
 
 /* BACK — info panel */
 .fun-back {
-  background: rgba(20, 10, 4, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -894,8 +962,8 @@ p.FULL {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 30px 20px;
-  text-decoration: none !important;
-  color: white !important;
+  text-decoration: none;
+  color: white;
   transition:
     background 0.3s,
     border-color 0.3s,
@@ -932,6 +1000,8 @@ p.FULL {
   border-color: white;
   transform: translateY(-10px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+  text-decoration: none;
 }
 
 .footer-text {
@@ -1206,6 +1276,7 @@ p.FULL {
   }
 }
 
+/* Touch devices — disable broken hover states */
 @media (hover: none) and (pointer: coarse) {
   .hire-btn button:hover {
     transform: none;
@@ -1229,10 +1300,10 @@ p.FULL {
     border-color: rgba(255, 255, 255, 0.1);
   }
   .project-track {
-    width: max-content;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    animation: trainLoop 28s linear infinite;
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .project-track:hover {
     animation-play-state: running;
@@ -1252,13 +1323,12 @@ p.FULL {
   .fun-back,
   .contact-card,
   .cert-modal {
-    
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
 }
 
-
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .project-track {
     animation: none;
