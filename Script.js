@@ -42,30 +42,30 @@ document.addEventListener("DOMContentLoaded", () => {
     card.appendChild(inner);
   });
 
-  // Touch tap — flip one card at a time on mobile/tablet
-  if (isTouchDevice()) {
-    funCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        const isAlreadyFlipped = card.classList.contains("flipped");
+  // Click/tap — flip one card at a time across all devices
+  funCards.forEach((card) => {
+    card.addEventListener("click", (e) => {
+      e.stopPropagation();
 
-        funCards.forEach((otherCard) => {
-          otherCard.classList.remove("flipped");
-        });
+      const isAlreadyFlipped = card.classList.contains("flipped");
 
-        if (!isAlreadyFlipped) {
-          card.classList.add("flipped");
-        }
+      funCards.forEach((otherCard) => {
+        otherCard.classList.remove("flipped");
       });
-    });
 
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".fun-card")) {
-        funCards.forEach((card) => {
-          card.classList.remove("flipped");
-        });
+      if (!isAlreadyFlipped) {
+        card.classList.add("flipped");
       }
     });
-  }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".fun-card")) {
+      funCards.forEach((card) => {
+        card.classList.remove("flipped");
+      });
+    }
+  });
 
   // ─────────────────────────────────────────────
   //  TYPEWRITER
@@ -111,48 +111,64 @@ document.addEventListener("DOMContentLoaded", () => {
     parallaxHeader.classList.toggle("scrolled", window.scrollY > 60);
   }
 
-  window.addEventListener("scroll", updateNavbar, { passive: true });
   updateNavbar();
 
   // ─────────────────────────────────────────────
-  //  PARALLAX (desktop only)
+  //  PARALLAX + SCROLL UPDATES
   // ─────────────────────────────────────────────
   const knight = document.getElementById("nbg");
   const hero = document.querySelector(".hero-content");
   const castle = document.querySelector(".section1 img:first-child");
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link");
 
   let ticking = false;
+
+  function handleScrollEffects() {
+    const scroll = window.scrollY;
+    const height = window.innerHeight;
+
+    updateNavbar();
+
+    if (scroll <= height) {
+      if (useParallax) {
+        if (knight)
+          knight.style.transform = `translate(${Math.round(-scroll * 0.06)}px, ${Math.round(scroll * 0.24)}px)`;
+        if (castle) castle.style.transform = `translateY(${scroll * 0.05}px)`;
+        if (hero)
+          hero.style.transform = `translate(-50%, calc(-50% + ${
+            scroll * 0.35
+          }px))`;
+      }
+      if (hero) hero.style.opacity = Math.max(0, 1 - scroll / 500);
+    }
+
+    let current = "";
+    sections.forEach((sec) => {
+      if (scroll >= sec.offsetTop - 160) current = sec.id;
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.toggle(
+        "active",
+        link.getAttribute("href") === "#" + current,
+      );
+    });
+
+    ticking = false;
+  }
 
   window.addEventListener(
     "scroll",
     () => {
       if (ticking) return;
-      requestAnimationFrame(() => {
-        const scroll = window.scrollY;
-        const height = window.innerHeight;
-
-        if (scroll <= height) {
-          if (useParallax) {
-            if (knight)
-              knight.style.transform = `translate(${-scroll * 0.1}px, ${scroll * 0.5}px)`;
-            if (castle)
-              castle.style.transform = `translateY(${scroll * 0.1}px) scale(${
-                1 + scroll * 0.0004
-              })`;
-            if (hero)
-              hero.style.transform = `translate(-50%, calc(-50% + ${
-                scroll * 0.7
-              }px))`;
-          }
-          if (hero) hero.style.opacity = Math.max(0, 1 - scroll / 500);
-        }
-
-        ticking = false;
-      });
       ticking = true;
+      requestAnimationFrame(handleScrollEffects);
     },
-    { passive: true }
+    { passive: true },
   );
+
+  handleScrollEffects();
 
   // ─────────────────────────────────────────────
   //  SCROLL REVEAL
@@ -163,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.target.classList.toggle("active", e.isIntersecting);
       });
     },
-    { threshold: 0.1 }
+    { threshold: 0.1 },
   );
 
   document
@@ -223,14 +239,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", (e) => {
     const trigger = e.target.closest(
-      ".modal-trigger, .screenshot-btn, .view-cert-btn"
+      ".modal-trigger, .screenshot-btn, .view-cert-btn",
     );
     if (!trigger) return;
     const rawData = trigger.getAttribute("data-img") || trigger.src || "";
     if (!rawData) return;
     const title =
       trigger.closest(".project-info, .cert-info")?.querySelector("h3")
-        ?.innerText || trigger.alt || "";
+        ?.innerText ||
+      trigger.alt ||
+      "";
     openModal(rawData, title);
   });
 
@@ -252,39 +270,16 @@ document.addEventListener("DOMContentLoaded", () => {
       (e) => {
         touchStartY = e.touches[0].clientY;
       },
-      { passive: true }
+      { passive: true },
     );
     modal.addEventListener(
       "touchend",
       (e) => {
         if (e.changedTouches[0].clientY - touchStartY > 80) closeModal();
       },
-      { passive: true }
+      { passive: true },
     );
   }
-
-  // ─────────────────────────────────────────────
-  //  NAV ACTIVE LINK
-  // ─────────────────────────────────────────────
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link");
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      let current = "";
-      sections.forEach((sec) => {
-        if (window.scrollY >= sec.offsetTop - 160) current = sec.id;
-      });
-      navLinks.forEach((link) => {
-        link.classList.toggle(
-          "active",
-          link.getAttribute("href") === "#" + current
-        );
-      });
-    },
-    { passive: true }
-  );
 
   // ─────────────────────────────────────────────
   //  AUTO-CLOSE MOBILE NAV
@@ -313,6 +308,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }, 250);
     },
-    { passive: true }
+    { passive: true },
   );
 });
