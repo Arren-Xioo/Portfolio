@@ -291,9 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isMobile = window.innerWidth < 768;
 
-    // Stop any running animation immediately
     train.style.animation = "none";
-    // Force reflow so stopping the animation takes effect before we change anything
     void train.offsetWidth;
 
     const gap = isMobile ? 20 : 40;
@@ -301,7 +299,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const speed = isMobile ? 20 : 35;
     const cloneCount = 5;
 
-    // ── Rebuild DOM ───────────────────────────────────────────────
     train.innerHTML = "";
     for (let i = 0; i < cloneCount; i++) {
       originalCards.forEach((card) => {

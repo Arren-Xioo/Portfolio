@@ -226,7 +226,6 @@ p.FULL {
   z-index: 2;
 }
 
-/* Fallback for browsers without backdrop-filter */
 @supports not (backdrop-filter: blur(10px)) {
   .about-container,
   .aff-card,
@@ -864,7 +863,6 @@ p.FULL {
   cursor: pointer;
 }
 
-/* ── The flipping inner wrapper (built by JS) ── */
 .fun-inner {
   position: relative;
   width: 100%;
@@ -874,7 +872,6 @@ p.FULL {
   border-radius: 12px;
 }
 
-/* Hover flip on desktop */
 @media (hover: hover) {
   .fun-card:hover .fun-inner {
     transform: rotateY(180deg);
@@ -885,7 +882,6 @@ p.FULL {
   transform: rotateY(180deg);
 }
 
-/* ── Shared face styles ── */
 .fun-front,
 .fun-back {
   position: absolute;
@@ -896,7 +892,6 @@ p.FULL {
   backface-visibility: hidden;
 }
 
-/* FRONT — photo only, no extra box */
 .fun-front {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -910,7 +905,6 @@ p.FULL {
   border-radius: 12px;
 }
 
-/* BACK — info panel */
 .fun-back {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1134,7 +1128,6 @@ p.FULL {
     padding: 100px 15px 60px;
   }
 
-  /* Projects — mobile train (JS-driven, smaller cards) */
   .projects-section {
     width: 100%;
     overflow: hidden;
@@ -1149,7 +1142,6 @@ p.FULL {
   }
 
   .project-track {
-    /* JS sets animation, width, gap — CSS just ensures correct base layout */
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
@@ -1280,7 +1272,6 @@ p.FULL {
   }
 }
 
-/* Touch devices — disable broken hover states */
 @media (hover: none) and (pointer: coarse) {
   .hire-btn button:hover {
     transform: none;
@@ -1312,14 +1303,12 @@ p.FULL {
   .fun-card.flipped .fun-inner {
     transform: rotateY(180deg);
   }
-  /* Focus indicator for flip cards (accessibility) */
   .fun-card:focus-visible {
     outline: 2px solid #d1b8bb;
     outline-offset: 4px;
     border-radius: 12px;
   }
 
-  /* Improved fallback positioning */
   @supports not (backdrop-filter: blur(10px)) {
     .about-container,
     .aff-card,
