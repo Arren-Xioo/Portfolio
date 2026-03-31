@@ -1134,7 +1134,7 @@ p.FULL {
     padding: 100px 15px 60px;
   }
 
-  /* Mobile Project Carousel */
+  /* Projects — mobile train (JS-driven, smaller cards) */
   .projects-section {
     width: 100%;
     overflow: hidden;
@@ -1143,32 +1143,16 @@ p.FULL {
   .project-window {
     width: 100%;
     overflow: hidden !important;
-    overflow-y: hidden !important;
-    -webkit-overflow-scrolling: auto;
     mask-image: none !important;
     -webkit-mask-image: none !important;
     padding: 20px 0 !important;
   }
 
   .project-track {
-    animation: trainLoop 45s linear infinite !important;
+    /* JS sets animation, width, gap — CSS just ensures correct base layout */
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 20px !important;
-    width: max-content !important;
-    padding: 10px 20px !important;
-    transform: translateX(0) !important;
-  }
-
-  .project-card-horizontal {
-    width: 280px !important;
-    min-width: 280px;
-    flex-shrink: 0 !important;
-    margin: 0 !important;
-    padding: 20px !important;
-    flex-direction: column !important;
-    animation: trainLoop 45s linear infinite;
   }
 
   .project-img-box {
@@ -1183,25 +1167,6 @@ p.FULL {
   .project-tags,
   .project-links {
     justify-content: center !important;
-  }
-
-  /* Scrollbar styling for better UX */
-  .project-window::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .project-window::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-  }
-
-  .project-window::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-  }
-
-  .project-window::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
   }
 
   .certs-grid {
@@ -1243,13 +1208,8 @@ p.FULL {
     flex: 1 1 100%;
   }
 
-  .project-card-horizontal {
-    width: 260px !important;
-    min-width: 260px;
-    padding: 16px !important;
-  }
   .project-img-box img {
-    height: 160px;
+    height: 140px;
   }
   .cert-img-box {
     height: 200px;
@@ -1303,10 +1263,6 @@ p.FULL {
   .project-info h3,
   .cert-info h3 {
     font-size: 1.2rem;
-  }
-  .project-card-horizontal {
-    width: 240px !important;
-    min-width: 240px;
   }
   .contact-grid {
     grid-template-columns: 1fr;

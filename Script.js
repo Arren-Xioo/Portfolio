@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.scrollTo(0, 0);
 
   if (window.location.hash) {
-    const hash = window.location.hash;
     history.replaceState(
       null,
       null,
@@ -165,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─────────────────────────────────────────────
   const knight = document.getElementById("Knight");
   const hero = document.querySelector(".hero-content");
-  const castle = document.querySelector("Castle");
+  const castle = document.getElementById("Castle");
   const section2 = document.querySelector(".section2");
   const section2Overlay = document.querySelector(".section2-light-overlay");
   const sections = document.querySelectorAll("section[id]");
@@ -278,159 +277,105 @@ document.addEventListener("DOMContentLoaded", () => {
   const train = document.getElementById("projectTrain");
   const projectWindow = document.querySelector(".project-window");
 
-  if (train) {
-    Array.from(train.children).forEach((card) => {
-      card.dataset.original = "true";
-    });
-  }
+  // Capture originals in memory ONCE — never touch them in the DOM again
+  const originalCards = train
+    ? Array.from(train.querySelectorAll(".project-card-horizontal")).map((c) =>
+        c.cloneNode(true),
+      )
+    : [];
 
-  function getOriginalProjectCards() {
-    if (!train) return [];
-    return Array.from(
-      train.querySelectorAll('.project-card-horizontal[data-original="true"]'),
-    );
-  }
-
-  function cleanupProjectClones() {
-    if (!train) return;
-    Array.from(
-      train.querySelectorAll('.project-card-horizontal[data-clone="true"]'),
-    ).forEach((clone) => clone.remove());
-  }
-
-  function resetProjectCardStyles(cards) {
-    cards.forEach((card) => {
-      card.style.width = "";
-      card.style.minWidth = "";
-      card.style.flexShrink = "";
-      card.style.flexDirection = "";
-    });
-  }
+  let seamlessStyleEl = null;
 
   function setupProjectCarousel() {
-    if (!train) return;
+    if (!train || !originalCards.length) return;
 
     const isMobile = window.innerWidth < 768;
 
-    cleanupProjectClones();
-
-    const originalCards = getOriginalProjectCards();
-    if (!originalCards.length) return;
-
-    // Stop any existing animation
+    // Stop any running animation immediately
     train.style.animation = "none";
-    train.style.width = "";
-    train.style.transform = "none";
-    train.style.display = "flex";
-    train.style.flexWrap = "nowrap";
+    // Force reflow so stopping the animation takes effect before we change anything
+    void train.offsetWidth;
 
-    resetProjectCardStyles(originalCards);
-
-    // Clear existing clones and content
-    train.innerHTML = "";
-
+    const gap = isMobile ? 20 : 40;
+    const cardWidth = isMobile ? 260 : null;
+    const speed = isMobile ? 20 : 35;
     const cloneCount = 5;
 
+    // ── Rebuild DOM ───────────────────────────────────────────────
+    train.innerHTML = "";
     for (let i = 0; i < cloneCount; i++) {
       originalCards.forEach((card) => {
-        const clone = card.cloneNode(true);
-        clone.dataset.clone = "true";
-        if (i === 0) {
-          clone.dataset.original = "true";
-        }
-        train.appendChild(clone);
+        const c = card.cloneNode(true);
+        c.style.cssText = "";
+        train.appendChild(c);
       });
     }
 
+    Object.assign(train.style, {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "nowrap",
+      gap: `${gap}px`,
+      padding: "10px 0",
+      width: "",
+      transform: "translateX(0)",
+    });
+
+    // Size each card
+    Array.from(train.querySelectorAll(".project-card-horizontal")).forEach(
+      (card) => {
+        Object.assign(card.style, {
+          flexShrink: "0",
+          width: isMobile ? `${cardWidth}px` : "min(800px, calc(100vw - 48px))",
+          minWidth: isMobile ? `${cardWidth}px` : "",
+          flexDirection: isMobile ? "column" : "",
+        });
+      },
+    );
+
+    // Measure after sizing
     const allCards = Array.from(
       train.querySelectorAll(".project-card-horizontal"),
     );
-
-    let totalWidth = 0;
-    allCards.forEach((card) => {
-      totalWidth += card.offsetWidth;
-    });
-
-    const gap = isMobile ? 20 : 40;
+    let totalWidth = allCards.reduce((sum, c) => sum + c.offsetWidth, 0);
     totalWidth += (allCards.length - 1) * gap;
 
     train.style.width = `${totalWidth}px`;
-    train.style.transform = "translateX(0)";
 
     const singleSetWidth = totalWidth / cloneCount;
 
-    const styleSheet = document.createElement("style");
-    styleSheet.textContent = `
-    @keyframes seamlessLoop {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-${singleSetWidth}px);
-      }
-    }
-  `;
-    document.head.appendChild(styleSheet);
+    // Inject/replace the keyframe rule
+    if (seamlessStyleEl) seamlessStyleEl.remove();
+    seamlessStyleEl = document.createElement("style");
+    seamlessStyleEl.textContent = `
+      @keyframes seamlessLoop {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-${singleSetWidth}px); }
+      }`;
+    document.head.appendChild(seamlessStyleEl);
 
-    train.style.animation = `seamlessLoop ${isMobile ? 20 : 35}s linear infinite`;
-    train.style.animationPlayState = "running";
+    train.style.animation = `seamlessLoop ${speed}s linear infinite`;
 
-    if (!isMobile) {
-      train.style.gap = "40px";
-      train.style.padding = "10px 0";
-
-      if (projectWindow) {
-        projectWindow.style.overflow = "hidden";
-        projectWindow.style.overflowX = "hidden";
-        projectWindow.style.overflowY = "hidden";
-        projectWindow.style.webkitOverflowScrolling = "";
-        projectWindow.style.maskImage =
-          "linear-gradient(to right, transparent, black 5%, black 95%, transparent)";
-        projectWindow.style.webkitMaskImage =
-          "linear-gradient(to right, transparent, black 5%, black 95%, transparent)";
-        projectWindow.style.padding = "50px 0";
-      }
-
-      allCards.forEach((card) => {
-        card.style.flexShrink = "0";
-        card.style.width = "min(800px, calc(100vw - 48px))";
-        card.style.minWidth = "";
-        card.style.flexDirection = "";
-      });
-    } else {
-      train.style.flexDirection = "row";
-      train.style.gap = "20px";
-      train.style.padding = "10px 20px";
-
-      if (projectWindow) {
-        projectWindow.style.overflow = "hidden";
-        projectWindow.style.overflowX = "hidden";
-        projectWindow.style.overflowY = "hidden";
-        projectWindow.style.webkitOverflowScrolling = "";
-        projectWindow.style.maskImage = "none";
-        projectWindow.style.webkitMaskImage = "none";
-        projectWindow.style.padding = "20px 0";
-      }
-
-      allCards.forEach((card) => {
-        card.style.width = "280px";
-        card.style.minWidth = "280px";
-        card.style.flexShrink = "0";
-        card.style.flexDirection = "column";
+    if (projectWindow) {
+      Object.assign(projectWindow.style, {
+        overflow: "hidden",
+        maskImage: isMobile
+          ? "none"
+          : "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+        webkitMaskImage: isMobile
+          ? "none"
+          : "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+        padding: isMobile ? "20px 0" : "50px 0",
       });
     }
   }
 
-  // Initial setup
   setupProjectCarousel();
 
-  let carouselResizeTimer;
   let carouselResizeTimeout;
   window.addEventListener("resize", () => {
     clearTimeout(carouselResizeTimeout);
-    carouselResizeTimeout = setTimeout(() => {
-      setupProjectCarousel();
-    }, 250);
+    carouselResizeTimeout = setTimeout(setupProjectCarousel, 250);
   });
 
   // ─────────────────────────────────────────────
@@ -584,19 +529,6 @@ document.addEventListener("DOMContentLoaded", () => {
     { passive: true },
   );
 
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 0);
-
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 50);
-
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 100);
-
-  window.addEventListener("load", function () {
-    window.scrollTo(0, 0);
-  });
+  // Ensure page starts at top after all assets load
+  window.addEventListener("load", () => window.scrollTo(0, 0));
 });
