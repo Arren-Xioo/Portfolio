@@ -1,28 +1,21 @@
-// ═══ CRITICAL: RUN IMMEDIATELY BEFORE ANY OTHER CODE ═══
-// This must be the FIRST thing executed
 (function () {
-  // Disable scroll restoration
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
   }
 
-  // Clear any hash from URL immediately
   if (window.location.hash) {
     const cleanUrl = window.location.pathname + window.location.search;
     history.replaceState(null, null, cleanUrl);
   }
 
-  // Force scroll to top synchronously
   window.scrollTo(0, 0);
 
-  // Prevent any initial scroll behavior
   const preventInitialScroll = function (e) {
     window.scrollTo(0, 0);
     e.preventDefault();
     return false;
   };
 
-  // Block scroll events for a short period
   window.addEventListener("scroll", preventInitialScroll, {
     passive: false,
     once: false,
@@ -33,31 +26,16 @@
   }, 500);
 })();
 
-// Main DOMContentLoaded event
 document.addEventListener("DOMContentLoaded", () => {
-  // Additional scroll reset
   window.scrollTo(0, 0);
 
-  // Check if there's a valid hash that should be navigated to
   if (window.location.hash) {
     const hash = window.location.hash;
-    // Clear hash again
     history.replaceState(
       null,
       null,
       window.location.pathname + window.location.search,
     );
-    setTimeout(() => {
-      history.replaceState(null, null, hash);
-      const element = document.querySelector(hash);
-      if (element) {
-        // Only scroll if it's not the fun gallery or if it's explicitly linked
-        // Skip auto-scrolling to fun gallery sections
-        if (!hash.includes("fun") && !hash.includes("gallery")) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }
-    }, 100);
   }
 
   const isTouchDevice = () =>
@@ -68,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const useParallax = !isTouchDevice() && !isSmallScreen();
 
   // ─────────────────────────────────────────────
-  //  FLIP CARDS (with keyboard support)
+  //  FLIP CARDS
   // ─────────────────────────────────────────────
   const funCards = document.querySelectorAll(".fun-card");
 
@@ -97,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     card.appendChild(inner);
   });
 
-  // Helper function to prevent XSS
   function escapeHtml(str) {
     if (!str) return "";
     return str
@@ -108,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/'/g, "&#39;");
   }
 
-  // Flip card on click/tap
+  // Flip card on click
   const flipCard = (card) => {
     const isAlreadyFlipped = card.classList.contains("flipped");
 
@@ -125,14 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     card.addEventListener("click", (e) => {
       e.stopPropagation();
       flipCard(card);
-    });
-
-    // Keyboard support: Enter and Space
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        flipCard(card);
-      }
     });
   });
 
@@ -196,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─────────────────────────────────────────────
   const knight = document.getElementById("Knight");
   const hero = document.querySelector(".hero-content");
-  const castle = document.querySelector("#castle");
+  const castle = document.querySelector("Castle");
   const section2 = document.querySelector(".section2");
   const section2Overlay = document.querySelector(".section2-light-overlay");
   const sections = document.querySelectorAll("section[id]");
@@ -224,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
           castle.style.transform = `translateY(${castleY}px) scale(${castleScale})`;
         }
         if (hero) {
-          const heroY = scroll * 0.72;
+          const heroY = scroll * 0.75;
           const heroScale = Math.max(0.8, 1 - scroll * 0.0004);
           hero.style.transform = `translate(-50%, calc(-50% + ${heroY}px)) scale(${heroScale})`;
         }
@@ -304,16 +273,168 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // ─────────────────────────────────────────────
-  //  PROJECT CAROUSEL
+  //  PROJECT CAROUSEL (TRAIN ANIMATION)
   // ─────────────────────────────────────────────
   const train = document.getElementById("projectTrain");
+  const projectWindow = document.querySelector(".project-window");
+
   if (train) {
-    train.innerHTML += train.innerHTML;
-    if (isSmallScreen()) train.style.animationDuration = "28s";
+    Array.from(train.children).forEach((card) => {
+      card.dataset.original = "true";
+    });
   }
 
+  function getOriginalProjectCards() {
+    if (!train) return [];
+    return Array.from(
+      train.querySelectorAll('.project-card-horizontal[data-original="true"]'),
+    );
+  }
+
+  function cleanupProjectClones() {
+    if (!train) return;
+    Array.from(
+      train.querySelectorAll('.project-card-horizontal[data-clone="true"]'),
+    ).forEach((clone) => clone.remove());
+  }
+
+  function resetProjectCardStyles(cards) {
+    cards.forEach((card) => {
+      card.style.width = "";
+      card.style.minWidth = "";
+      card.style.flexShrink = "";
+      card.style.flexDirection = "";
+    });
+  }
+
+  function setupProjectCarousel() {
+    if (!train) return;
+
+    const isMobile = window.innerWidth < 768;
+
+    cleanupProjectClones();
+
+    const originalCards = getOriginalProjectCards();
+    if (!originalCards.length) return;
+
+    // Stop any existing animation
+    train.style.animation = "none";
+    train.style.width = "";
+    train.style.transform = "none";
+    train.style.display = "flex";
+    train.style.flexWrap = "nowrap";
+
+    resetProjectCardStyles(originalCards);
+
+    // Clear existing clones and content
+    train.innerHTML = "";
+
+    const cloneCount = 5;
+
+    for (let i = 0; i < cloneCount; i++) {
+      originalCards.forEach((card) => {
+        const clone = card.cloneNode(true);
+        clone.dataset.clone = "true";
+        if (i === 0) {
+          clone.dataset.original = "true";
+        }
+        train.appendChild(clone);
+      });
+    }
+
+    const allCards = Array.from(
+      train.querySelectorAll(".project-card-horizontal"),
+    );
+
+    let totalWidth = 0;
+    allCards.forEach((card) => {
+      totalWidth += card.offsetWidth;
+    });
+
+    const gap = isMobile ? 20 : 40;
+    totalWidth += (allCards.length - 1) * gap;
+
+    train.style.width = `${totalWidth}px`;
+    train.style.transform = "translateX(0)";
+
+    const singleSetWidth = totalWidth / cloneCount;
+
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = `
+    @keyframes seamlessLoop {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-${singleSetWidth}px);
+      }
+    }
+  `;
+    document.head.appendChild(styleSheet);
+
+    train.style.animation = `seamlessLoop ${isMobile ? 20 : 35}s linear infinite`;
+    train.style.animationPlayState = "running";
+
+    if (!isMobile) {
+      train.style.gap = "40px";
+      train.style.padding = "10px 0";
+
+      if (projectWindow) {
+        projectWindow.style.overflow = "hidden";
+        projectWindow.style.overflowX = "hidden";
+        projectWindow.style.overflowY = "hidden";
+        projectWindow.style.webkitOverflowScrolling = "";
+        projectWindow.style.maskImage =
+          "linear-gradient(to right, transparent, black 5%, black 95%, transparent)";
+        projectWindow.style.webkitMaskImage =
+          "linear-gradient(to right, transparent, black 5%, black 95%, transparent)";
+        projectWindow.style.padding = "50px 0";
+      }
+
+      allCards.forEach((card) => {
+        card.style.flexShrink = "0";
+        card.style.width = "min(800px, calc(100vw - 48px))";
+        card.style.minWidth = "";
+        card.style.flexDirection = "";
+      });
+    } else {
+      train.style.flexDirection = "row";
+      train.style.gap = "20px";
+      train.style.padding = "10px 20px";
+
+      if (projectWindow) {
+        projectWindow.style.overflow = "hidden";
+        projectWindow.style.overflowX = "hidden";
+        projectWindow.style.overflowY = "hidden";
+        projectWindow.style.webkitOverflowScrolling = "";
+        projectWindow.style.maskImage = "none";
+        projectWindow.style.webkitMaskImage = "none";
+        projectWindow.style.padding = "20px 0";
+      }
+
+      allCards.forEach((card) => {
+        card.style.width = "280px";
+        card.style.minWidth = "280px";
+        card.style.flexShrink = "0";
+        card.style.flexDirection = "column";
+      });
+    }
+  }
+
+  // Initial setup
+  setupProjectCarousel();
+
+  let carouselResizeTimer;
+  let carouselResizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(carouselResizeTimeout);
+    carouselResizeTimeout = setTimeout(() => {
+      setupProjectCarousel();
+    }, 250);
+  });
+
   // ─────────────────────────────────────────────
-  //  UNIFIED MODAL (with JSON parsing)
+  //  UNIFIED MODAL
   // ─────────────────────────────────────────────
   const modal = document.getElementById("certModal");
   const container = document.getElementById("modalImageContainer");
@@ -325,7 +446,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let imageArray = [];
 
-    // Parse JSON array if available, otherwise fallback to split
     try {
       if (rawData.startsWith("[")) {
         imageArray = JSON.parse(rawData);
@@ -350,8 +470,26 @@ document.addEventListener("DOMContentLoaded", () => {
       img.alt = title || "Certificate or screenshot image";
       img.style.display = "block";
       img.style.marginBottom = "20px";
+      img.onerror = () => {
+        img.alt = `[Image not found: ${path}]`;
+        img.style.opacity = "0.6";
+        img.style.minHeight = "100px";
+        img.style.display = "flex";
+        img.style.alignItems = "center";
+        img.style.justifyContent = "center";
+        img.style.backgroundColor = "rgba(0,0,0,0.5)";
+      };
+
       container.appendChild(img);
     });
+
+    if (imageArray.length === 0) {
+      const errorMsg = document.createElement("p");
+      errorMsg.textContent = "No images to display.";
+      errorMsg.style.color = "white";
+      errorMsg.style.padding = "20px";
+      container.appendChild(errorMsg);
+    }
 
     if (caption) caption.innerText = title || "";
     modal.style.display = "flex";
@@ -410,14 +548,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─────────────────────────────────────────────
-  //  AUTO-CLOSE MOBILE NAV (with null check)
+  //  AUTO-CLOSE MOBILE NAV
   // ─────────────────────────────────────────────
   const navCollapse = document.getElementById("navbarNav");
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      if (window.innerWidth < 992 && navCollapse) {
-        const bsCollapse = bootstrap.Collapse.getInstance(navCollapse);
-        if (bsCollapse) bsCollapse.hide();
+      if (
+        window.innerWidth < 992 &&
+        navCollapse &&
+        window.bootstrap?.Collapse
+      ) {
+        const bsCollapse =
+          bootstrap.Collapse.getInstance(navCollapse) ||
+          new bootstrap.Collapse(navCollapse, { toggle: false });
+        bsCollapse.hide();
       }
     });
   });
@@ -440,7 +584,6 @@ document.addEventListener("DOMContentLoaded", () => {
     { passive: true },
   );
 
-  // Final scroll reset after everything is loaded
   setTimeout(() => {
     window.scrollTo(0, 0);
   }, 0);

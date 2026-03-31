@@ -10,7 +10,7 @@
   font-display: swap;
 }
 
-/* ===== RESET & BASE ===== */
+/* ===== RESET ===== */
 *,
 *::before,
 *::after {
@@ -69,7 +69,6 @@ img {
   font-family: "CardinalAlternate";
 }
 
-/* Focus styles for accessibility */
 .navbar .nav-link:focus-visible,
 .btn-action:focus-visible,
 .hire-btn button:focus-visible,
@@ -1135,25 +1134,76 @@ p.FULL {
     padding: 100px 15px 60px;
   }
 
+  /* Mobile Project Carousel */
+  .projects-section {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .project-window {
+    width: 100%;
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: auto;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    padding: 20px 0 !important;
+  }
+
+  .project-track {
+    animation: trainLoop 45s linear infinite !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    width: max-content !important;
+    padding: 10px 20px !important;
+    transform: translateX(0) !important;
+  }
+
   .project-card-horizontal {
-    flex-direction: column;
-    align-items: center;
-    width: min(380px, calc(100vw - 32px));
+    width: 280px !important;
+    min-width: 280px;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    flex-direction: column !important;
+    animation: trainLoop 45s linear infinite;
   }
 
   .project-img-box {
-    max-width: 100%;
-    width: 100%;
-    margin: 0 0 15px 0;
+    margin: 0 0 15px 0 !important;
+    max-width: 100% !important;
   }
+
   .project-info {
-    text-align: center;
-    width: 100%;
+    text-align: center !important;
   }
+
   .project-tags,
   .project-links {
-    justify-content: center;
+    justify-content: center !important;
   }
+
+  /* Scrollbar styling for better UX */
+  .project-window::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .project-window::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+
+  .project-window::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+  }
+
+  .project-window::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
   .certs-grid {
     grid-template-columns: 1fr;
   }
@@ -1194,12 +1244,9 @@ p.FULL {
   }
 
   .project-card-horizontal {
-    flex-direction: column;
-    width: min(300px, calc(100vw - 24px));
-    padding: 16px;
-  }
-  .project-img-box {
-    margin: 0 0 12px 0;
+    width: 260px !important;
+    min-width: 260px;
+    padding: 16px !important;
   }
   .project-img-box img {
     height: 160px;
@@ -1258,7 +1305,8 @@ p.FULL {
     font-size: 1.2rem;
   }
   .project-card-horizontal {
-    width: min(270px, calc(100vw - 20px));
+    width: 240px !important;
+    min-width: 240px;
   }
   .contact-grid {
     grid-template-columns: 1fr;
@@ -1299,12 +1347,6 @@ p.FULL {
     background: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.1);
   }
-  .project-track {
-    animation: none;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
   .project-track:hover {
     animation-play-state: running;
   }
@@ -1313,6 +1355,26 @@ p.FULL {
   }
   .fun-card.flipped .fun-inner {
     transform: rotateY(180deg);
+  }
+  /* Focus indicator for flip cards (accessibility) */
+  .fun-card:focus-visible {
+    outline: 2px solid #d1b8bb;
+    outline-offset: 4px;
+    border-radius: 12px;
+  }
+
+  /* Improved fallback positioning */
+  @supports not (backdrop-filter: blur(10px)) {
+    .about-container,
+    .aff-card,
+    .tech-card,
+    .webinar-card,
+    .cert-card,
+    .fun-back,
+    .contact-card,
+    .parallax-header.scrolled {
+      background: rgba(30, 20, 15, 0.95);
+    }
   }
   .parallax-header.scrolled,
   .about-container,
